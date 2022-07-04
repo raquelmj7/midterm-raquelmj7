@@ -115,7 +115,7 @@ public class CreditCard extends Account{
             } else if (resp2 == -1 || resp2 == 0) {    //interest rate >= 12%
                 BigDecimal interest = new BigDecimal("0.01");
                 System.out.println("Your interest rate has increased by 1%.");
-                setInterestRate(interestRate.add(new BigDecimal(0.01)));   //COMPROBAR
+                setInterestRate(interestRate.add(interest));   //COMPROBAR
                 BigDecimal newAmount = new BigDecimal(String.valueOf(getBalance().getAmount().multiply(getInterestRate())));
                 getBalance().increaseAmount(newAmount);
             }

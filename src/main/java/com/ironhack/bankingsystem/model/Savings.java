@@ -89,11 +89,6 @@ public class Savings extends Account{
     }
 
     public void setInterestRate(BigDecimal interestRate) {
-//        Date actualDate=new Date();
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(creationDate);
-//        c.add(Calendar.YEAR, ++);
-//        if(c){
         this.interestRate = interestRate;
     }
 
