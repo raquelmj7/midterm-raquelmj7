@@ -88,10 +88,10 @@ public class CreditCard extends Account{
     }
 
 
-    private void updateInterestCreditCard(){
+    private String updateInterestCreditCard(){
 
         Date actualDate= new Date(String.valueOf(LocalDate.now()));
-        Date lastChangeDate = getCreationDate();                  //aqui no se guarda la actual, PREGUNTAR
+        Date lastChangeDate = getCreationDate();
 
         Date actualYear = new Date (actualDate.getYear());         //To check the year
         Date lastChangeYear = new Date (lastChangeDate.getYear());
@@ -106,19 +106,20 @@ public class CreditCard extends Account{
         int resp2= number.compareTo(actualInterestRate);
 
         if((resp1 ==0) && resp0==0) {        //not even a month has passed since the last increase (same month and year)
-            System.out.println("Your interest rate has not increased.");
+             return "Your interest rate has not increased.";
 
         }else if((resp1==-1 || resp1==1) || (resp1 ==0 && resp0==-1)) {    //one month has passed since the last increase
             if (resp2 == 1) {                                                           //or same month but different year
-                System.out.println("Your interest rate has not increased.");
+                return "Your interest rate has not increased.";
 
             } else if (resp2 == -1 || resp2 == 0) {    //interest rate >= 12%
                 BigDecimal interest = new BigDecimal("0.01");
                 System.out.println("Your interest rate has increased by 1%.");
-                setInterestRate(interestRate.add(interest));   //COMPROBAR
+                setInterestRate(interestRate.add(interest));
                 BigDecimal newAmount = new BigDecimal(String.valueOf(getBalance().getAmount().multiply(getInterestRate())));
                 getBalance().increaseAmount(newAmount);
             }
         }
+        return "Applied interest";
     }
 }

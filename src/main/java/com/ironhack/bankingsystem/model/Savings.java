@@ -8,6 +8,7 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -106,5 +107,30 @@ public class Savings extends Account{
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+    private String updateInterestSavings(){
+
+        Date actualDate= new Date(String.valueOf(LocalDate.now()));
+        Date lastChangeDate=actualDate;
+
+        Date actualYear = new Date (actualDate.getYear());         //To check the year
+        Date lastChangeYear = new Date (lastChangeDate.getYear());
+        int resp0= lastChangeYear.compareTo(actualYear);
+
+
+        if(resp0==0) {        //not even a year has passed since the last increase
+            return "Your interest rate has not increased.";
+
+        }else if((resp0==-1 || resp0==1)) {    //one year or more has passed since the last increase
+
+                System.out.println("Your interest rate has increased by 1%.");     //Apply interest
+                BigDecimal interest = new BigDecimal("0.01");
+                setInterestRate(interestRate.add(interest));
+                BigDecimal newAmount2 = new BigDecimal(String.valueOf(getBalance().getAmount().multiply(getInterestRate())));
+                getBalance().increaseAmount(newAmount2);
+                lastChangeDate = actualDate;
+            }
+        return "Applied interest";
     }
 }
